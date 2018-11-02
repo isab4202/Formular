@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular</title>
+    <link rel="stylesheet" href="">
+
+</head>
+
+<body>
+    <style>
+        form {
+            width: "100%";
+            background-color: aquamarine;
+            padding: 2%;
+        }
+
+        input {
+            width: 40%;
+            border: round 5px yellow;
+            padding: 2%;
+            margin: 2%;
+            font-size: 1.5em;
+            font-family: serif;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        textarea {
+            width: 95%;
+            height: 200px;
+        }
+
+        input[type=submit] {
+            width: 120px;
+            background-color: coral;
+            color: blueviolet;
+            font-size: 20px;
+        }
+
+        input[type=email]:focus {
+            background-color: fuchsia;
+        }
+
+
+        input[type=text]:hover {
+
+            background-color: deeppink;
+
+        }
+
+    </style>
+
+    <form>
+        <input id="navn" type="text" placeholder="Dit navn" required>
+        <input id="email" type="email" placeholder="Din email" required><br>
+        <textarea id="besked" type="text" placeholder="Din besked" required> </textarea> <br>
+        <input type="submit" value="send"> <span id="response"> </span> <br>
+
+    </form>
+
+    <script>
+        let svartekst = "";
+        document.querySelector("form").addEventListener("submit", ajaxCall);
+
+        async function ajaxCall(e) {
+            e.preventDefault();
+            let navn = this.querySelector("input[type=text]").value;
+            console.log(navn);
+            let url = "formtest1.php?navn=" + navn;
+            let svar = await fetch(url);
+            svartekst = await svar.text();
+            show();
+            this.querySelector("input[type=text]").value = "";
+        }
+
+        function show(response) {
+            document.querySelector("#response").textContent = svartekst;
+        }
+
+    </script>
+</body>
+
+</html>
